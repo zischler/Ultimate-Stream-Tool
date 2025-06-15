@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ultimate Game Overlay</title>
+
+    <script src="Resources/Scripts/Game Scoreboard.js"></script>
+    <script src="Resources/Scripts/gsap.min.js"></script>
+
+
+    <style>
+        @font-face {
+            font-family: "Deansgate";
+            src: url('Resources/Fonts/DeansgateCondensed-Bold.ttf');
+        }
+
+        @font-face {
+            font-family: "FolkMedium";
+            src: url('Resources/Fonts/A-OTF-FolkPro-Medium.otf');
+        }
+
+        @font-face {
+            font-family: "FolkHeavy";
+            src: url('Resources/Fonts/A-OTF-FolkPro-Heavy.otf');
+        }
+
+        @font-face {
+            font-family: "Roboto";
+            src: url('Resources/Fonts/Roboto-Bold.ttf');
+        }
+
+        @font-face {
+            font-family: "Smash";
+            src: url('Resources/Fonts/FOT-RodinBokutohPro-UB.otf');
+        }
+
+        @font-face {
+            font-family: "Compacta";
+            src: url('Resources/Fonts/compacta.ttf');
+        }
+
+        /*
+        TODO add compacta font
+        */
+
+        :root {
+            --sd-blue: #2585F3;
+            --sd-red: #C3292E;
+        }
+
+        body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            background: transparent;
+            padding: 0px;
+            margin: 0px;
+            color: white;
+            font-family: "Compacta", "Smash";
+            white-space: nowrap;
+        }
+
+        .logo-wrapper {
+            grid-column-start: 9;
+            grid-column-end: 12;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        #logo {
+            position: absolute;
+            top: -70px;
+        }
+
+        #logo img {
+            max-width: 240px;
+        }
+
+        .scoreboard-wrapper {
+            display: grid;
+            grid-template-columns: repeat(19, 101px [col-start]);
+            margin-top: 40px;
+        }
+
+        .player1-score-flag {
+            display: flex;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color: #000000;
+            height: 94px;
+            width: 94px;
+        }
+
+        .player1-score-bg {
+            height: 90px;
+            background-color: #000000;
+            grid-column-start: 4;
+            grid-column-end: 8;
+            border-bottom: 4px solid var(--sd-red)
+        }
+
+        .player1-score-number-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: var(--sd-red);
+            grid-column-start: 8;
+            grid-column-end: 9;
+        }
+
+        .player2-score-number-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: var(--sd-blue);
+            grid-column-start: 12;
+            grid-column-end: 13;
+        }
+
+        .player2-score-bg {
+            height: 90px;
+            background-color: #000000;
+            grid-column-start: 13;
+            grid-column-end: 17;
+            border-bottom: 4px solid var(--sd-blue)
+        }
+
+        .player2-score-flag {
+            position: absolute;
+            height: 94px;
+            width: 94px;
+            right: 0px;
+            top: 0px;
+            display: flex;
+            background-color: #000000;
+        }
+
+        .mirror {
+            transform: scaleX(-1);
+        }
+
+        .absol {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+
+
+        .scoreboard {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 10px;
+        }
+
+        .scoreboard#overlayP1 {
+            flex-direction: row-reverse;
+        }
+        .scoreboard#overlayP2 {
+            flex-direction: row;
+        }
+
+        .rect {
+            width: 588px;
+            height: 63px;
+            top: 345.5px;
+            z-index: -10;
+            position: absolute;
+        }
+
+        #p1Color {
+            left: 161px;
+        }
+
+        #p2Color {
+            right: -375px;
+        }
+
+
+        .pCharacter {
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            margin: 0 10px
+        }
+
+        #p1Character {
+        }
+
+        #p2Character {
+        }
+
+        .teamLogo {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+        }
+
+        #teamLogoP1 {
+            left: 8px;
+        }
+
+        #teamLogoP2 {
+            right: 8px;
+        }
+
+
+        .wrappers {
+            /*position: absolute;
+            width: 330px;
+            height: 54px;
+            line-height: 54px;*/
+            opacity: 0;
+            color: white;
+        }
+
+        #p1Wrapper {
+            text-align: right;
+        }
+
+        #p2Wrapper {
+            text-align: left;
+        }
+
+        .names {
+            text-transform: uppercase;
+        }
+
+        .teams {}
+
+        .pronouns {
+            font-style: italic;
+        }
+
+        .scores {
+            position: absolute;
+            top: 100px;
+            height: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #scoresP2 {
+            right: 35px;
+            transform: scaleX(-1);
+        }
+
+        .scoreTick {
+            /*position: absolute;*/
+            opacity: 0;
+        }
+
+        #win1P1 {
+            display: none; 
+        }
+
+        #win2P1 {
+            display: none; 
+        }
+
+        #win3P1 {
+            display: none; 
+        }
+
+        #wlP1 {
+            transform: scale(0.545);
+        }
+
+        #win1P2 {
+            display: none; 
+        }
+
+        #win2P2 {
+            display: none; 
+        }
+
+        #win3P2 {
+            display: none; 
+        }
+
+        #wlP2 {
+            top: -311px;
+            right: -351px;
+            transform: scale(0.545);
+        }
+
+        .round-info {
+            background-color: #000000;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #overlayRound {
+            height: 65%;
+            opacity: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #overlayFormat {
+            height: 35%;
+            background-color: var(--sd-red);
+            opacity: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #format {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        #round {
+            line-height: 50px;
+            text-align: center;
+            color: white;
+        }
+
+        #bestOf {
+            text-align: center;
+            font-size: 24px;
+            color: white;
+            margin-right: 4px;
+        }
+
+        #p1NScore {
+            position: absolute;
+            text-align: center;
+            opacity: 0;
+            line-height: 50px;
+            color: white;
+        }
+
+        #p2NScore {
+            position: absolute;
+            text-align: center;
+            opacity: 0;
+            line-height: 50px;
+            color: white;
+        }
+
+        #flagP1, #flagP2 {
+            width: auto;
+            height: 100%;
+            object-fit: cover;
+            max-height: 94px;
+        }
+
+        .player-badge {
+            background-color: white;
+            padding: 2px;
+            border-radius: 5px;
+            line-height: 1ch;
+        }
+
+        #overlayCasters {
+            position: absolute;
+            right: 12px;
+            bottom: 50px;
+            opacity: 1;
+            transform: scale(1.1);
+            filter: drop-shadow(0px 0px 3px black);
+        }
+
+        #caster1 {
+            position: absolute;
+            bottom: 110px;
+        }
+
+        #caster2 {
+            position: absolute;
+            bottom: 50px;
+        }
+
+        .casterTextBox {
+            position: absolute;
+            width: 255px;
+            height: 36px;
+            right: 0px;
+            text-align: center;
+        }
+
+        .casterIcon {
+            height: 23px;
+            width: 22px;
+            fill: white;
+            transform: translate(3px, 2px);
+        }
+
+        .casterText {
+            font-size: 22px;
+            font-family: "Smash";
+        }
+
+        .casterTwitterBox {
+            position: absolute;
+            width: 255px;
+            height: 36px;
+            bottom: -60px;
+            right: 0px;
+            text-align: center;
+        }
+
+        .twitterIcon {
+            height: 20px;
+            width: 20px;
+            transform: translateY(3px);
+            fill: rgb(168, 168, 168);
+        }
+
+        .casterTwitchBox {
+            position: absolute;
+            width: 255px;
+            height: 36px;
+            bottom: -62px;
+            right: 0px;
+            text-align: center;
+        }
+
+        .twitchIcon {
+            height: 17px;
+            width: 17px;
+            fill: rgb(168, 168, 168);
+            transform: translateY(2px);
+        }
+
+        .socialText {
+            font-size: 18px;
+            font-family: "Smash";
+            color: rgb(168, 168, 168);
+        }
+
+
+
+        #introVid {
+            position: absolute;
+            top: 0px;
+        }
+
+
+        .pIntro {
+            position: absolute;
+            width: 500px;
+            height: 94px;
+            line-height: 74px;
+            bottom: 478px;
+            opacity: 0;
+            font-family: "Smash";
+        }
+
+        #p1Intro {
+            text-align: right;
+            left: 355px;
+            text-shadow: 0px 0px 20px;
+        }
+
+        #p2Intro {
+            text-align: left;
+            right: 355px;
+            text-shadow: 0px 0px 20px;
+        }
+
+
+        .textIntro {
+            position: absolute;
+            text-align: center;
+            opacity: 0;
+        }
+
+        #midTextIntro {
+            width: 1100px;
+            height: 74px;
+            left: 410px;
+            bottom: 498px;
+            font-family: "Smash";
+            line-height: 74px;
+            font-size: 110px;
+        }
+
+        #rtIntro {
+            line-height: 40px;
+            font-size: 48px;
+        }
+
+        #roundIntro {
+            left: 510px;
+            width: 900px;
+            height: 40px;
+            top: 406px;
+        }
+
+        #tNameIntro {
+            left: 510px;
+            width: 900px;
+            height: 40px;
+            bottom: 400px;
+        }
+
+        #introBG {
+            position: absolute;
+            width: 1920px;
+            height: 1080px;
+            top: 0px;
+            background-color: rgba(0, 0, 0, 0.50);
+        }
+
+        #superCoolInterrogation {
+            position: absolute;
+            height: 74px;
+            right: 520px;
+            font-family: "Smash";
+            line-height: 74px;
+            bottom: 500px;
+            font-size: 110px;
+            opacity: 0;
+        }
+
+        #overlayIntro {
+            opacity: 0;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: center;
+        }
+
+        .justify-space {
+            justify-content: space-between;
+        }
+
+        .p1-cam {
+            position: absolute;
+            bottom: 100px;
+            left: 0px;
+            aspect-ratio: 16 / 9;
+            width: 350px;
+            background: linear-gradient(135deg, black, var(--sd-red));
+        }
+
+        .p2-cam {
+            position: absolute;
+            bottom: 100px;
+            right: 0px;
+            aspect-ratio: 16 / 9;
+            width: 350px;
+            background: linear-gradient(-135deg, black, var(--sd-blue));
+        }
+
+    </style>
+</head>
+
+<body style="background-color:rgb(10, 187, 10)"> <!--- TODO remove bg -->
+    <div class="scoreboard-wrapper">
+        <div class="round-info">
+            <div id="overlayRound">
+                <span id="round"></span>
+            </div>
+
+            <div id="overlayFormat">
+                <span id="bestOf"></span>
+                <span id="format"></span>
+            </div>
+        </div>
+        <div class="player1-score-bg relative">
+            <div class="player1-score-flag">
+                <img id="flagP1">
+            </div>
+            <div id="overlayP1" class="scoreboard">
+                <img class="sagaIcon" id="sagaIconP1">
+                <div class="pCharaMask">
+                    <img id="p1Character" class="pCharacter">
+                </div>
+
+                <img id="teamLogoP1" class="teamLogo">
+
+                <span id="p1Wrapper" class="wrappers">
+                    <span id="p1Name" class="names"></span>
+                    <span id="p1Pron" class="pronouns"></span>
+                    <span id="p1Team" class="teams"></span>
+                </span>
+            </div>
+            <div id="scoresP1" class="scores">
+                <div class="flex">
+                    <div id="win1P1" class="scoreTick">
+                        <svg width="35" height="23" id="win1P1Color">
+                            <polygon points="10,0 32,0 25,23 0,23" />
+                        </svg>
+                    </div>
+
+                    <div id="win2P1" class="scoreTick">
+                        <svg width="35" height="23" id="win2P1Color">
+                            <polygon points="10,0 32,0 25,23 0,23" />
+                        </svg>
+                    </div>
+
+                    <div id="win3P1" class="scoreTick">
+                        <svg width="35" height="23" id="win3P1Color">
+                            <polygon points="10,0 32,0 25,23 0,23" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div id="wlP1" class="scoreTick">
+                    <div class="player-badge">
+                        <img id="wlP1Text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="player1-score-number-wrapper">
+            <div id="p1NScore">
+                <span id="p1NScore"></span>
+            </div>
+        </div>
+        <div class="logo-wrapper">
+            <div id="logo" class="logo">
+                <img src="Resources/Overlay/Logo.png">
+            </div>
+        </div>
+        <div class="player2-score-number-wrapper">
+            <div id="p2NScore">
+                <span id="p2NScore"></span>
+            </div>
+        </div>
+        <div class="player2-score-bg relative">
+            <div id="overlayP2" class="scoreboard">
+                <img class="sagaIcon" id="sagaIconP2">
+                <div class="pCharaMask">
+                    <img id="p2Character" class="pCharacter" />
+                </div>
+
+                <img id="teamLogoP2" class="teamLogo">
+
+                <span id="p2Wrapper" class="wrappers">
+                    <span id="p2Team" class="teams"></span>
+                    <span id="p2Name" class="names"></span>
+                    <span id="p2Pron" class="pronouns"></span>
+                </span>
+            </div>
+            <div id="scoresP2" class="scores">
+                <div class="flex">
+                    <div id="win1P2" class="scoreTick">
+                        <svg width="35" height="23" id="win1P2Color">
+                            <polygon points="10,0 32,0 25,23 0,23" />
+                        </svg>
+                    </div>
+
+                    <div id="win2P2" class="scoreTick">
+                        <svg width="35" height="23" id="win2P2Color">
+                            <polygon points="10,0 32,0 25,23 0,23" />
+                        </svg>
+                    </div>
+
+                    <div id="win3P2" class="scoreTick">
+                        <svg width="35" height="23" id="win3P2Color">
+                            <polygon points="10,0 32,0 25,23 0,23" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div id="wlP2" class="scoreTick">
+                    <div class="player-badge">
+                        <img id="wlP2Text">
+                    </div>
+                </div>
+            </div>
+            <div class="player2-score-flag">
+                <img id="flagP2">
+            </div>
+        </div>
+    </div>
+
+    <div class="p1-cam">
+    </div>
+
+    <div class="p2-cam">
+    </div>
+
+    <!--div id="overlayIntro">
+        <div id="introBG"></div>
+
+        <video id="introVid" width="1920" height="1080"></video>
+
+        <div id="playersIntro">
+            <span id="p1Intro" class="pIntro"></span>
+            <span id="p2Intro" class="pIntro"></span>
+        </div>
+
+        <div id="textsIntro">
+            <span id="midTextIntro" class="textIntro">VS</span>
+            <div id="rtIntro">
+                <span id="roundIntro" class="textIntro"></span>
+                <span id="tNameIntro" class="textIntro"></span>
+            </div>
+        </div>
+
+        <span id="superCoolInterrogation">?</span>
+    </div-->
+
+</body>
+
+</html>
