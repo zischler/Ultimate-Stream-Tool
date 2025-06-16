@@ -64,13 +64,26 @@ You can also replace the logo simply by adding a 200x200 resolution one.
 
 While to change the position of the icons and writings you should modify parts of the code contained in the `html` and `js` files.
 
+## Development Stream Graphics
+
+Run local web server to have access to local files and check styling
+- npx http-server -o ./Stream-Tool
+
+## Development Stream Tool GUI
+
+- folder structure needs to stay the same (also Stream-Tool)
+- use `yarn start` to start a local electron development application
+- use `yarn package` or similar command (see `package.json`) to build the application for usage.
+
 ---
 
 ## Credits
 
 The "Ultimate Stream Tool" was made by [beto](https://twitter.com/pokeroby_beto) with the help of [Andrei](https://twitter.com/dpandreww) and [Loci](https://twitter.com/Loci_AF). 
 
-This is an upgraded version of the [Melee Stream Tool](https://github.com/Readek/Melee-Stream-Tool) made by [Readek](https://twitter.com/Readeku).
+This is an upgraded version of the [Ultimate Stream Tool by beto](https://github.com/Readek/Melee-Stream-Tool) to include country selection as well as some other features. Updates done by [zischler](https://twitter.com/derzischler)
+
+This is an upgraded version of the [Melee Stream Tool](https://github.com/pokerobybeto/Ultimate-Stream-Tool) made by [beto](https://twitter.com/pokeroby_beto).
 
 All the renders were taken from [The Spriters Resource](https://www.spriters-resource.com/nintendo_switch/supersmashbrosultimate/), [Cuphead render](https://www.deviantart.com/unbecomingname/art/Cuphead-Smash-Ultimate-Fan-Render-828617953), [Cuphead stock icon](https://twitter.com/altermentality/status/1009894947762233344), [Sans render](https://www.deviantart.com/unbecomingname/art/Sans-Smash-Ultimate-Fan-Render-812380081), [Sans stock icon](https://smashboards.com/members/haunterspencer.403470/), [Vs screen template](https://www.deviantart.com/lkgamingart/art/SSBU-VS-Splash-Screen-Template-2P-796548756)
 
