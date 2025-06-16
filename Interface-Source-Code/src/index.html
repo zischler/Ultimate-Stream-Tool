@@ -40,7 +40,15 @@
 
                   </div>
                 </div>
-                <input type="text" id="p1Country" class="textInput mousetrap" tabindex="4" placeholder="CH" title="Insert P1's country code here" spellcheck="false">
+                <div id="p1Country" class="country-selector textInput mousetrap" tabindex="4" title="Select P1's country">
+                  <input type="hidden" id="p1CountryInput" onchange="changePreviewValue('p1Country')">
+                  <div class="country-preview" onclick="switchCountrySelector('p1Country')"></div>
+                  <div class="country-flag-grid">
+
+                  </div>
+                  <div class="country-flag-boundary" onclick="switchCountrySelector('p1Country', true)">
+                  </div>
+                </div>
               </div>
   
               <div class="scoreInfo">
@@ -113,7 +121,14 @@
                   </div>
                   <div class="dropdownColor" id="dropdownColorP2"></div>
                 </div>
-                <input type="text" id="p2Country" class="textInput mousetrap" tabindex="4" placeholder="CH" title="Insert P2's country code here" spellcheck="false">
+                <div id="p2Country" class="country-selector textInput mousetrap" tabindex="4" title="Select P2's country">
+                  <input type="hidden" id="p2CountryInput" onchange="changePreviewValue('p2Country')">
+                  <div class="country-preview" onclick="switchCountrySelector('p2Country')"></div>
+                  <div class="country-flag-grid">
+                    
+                  </div>
+                  <div class="country-flag-boundary" onclick="switchCountrySelector('p2Country', true)"></div>
+                </div>
               </div>
   
               <div class="scoreInfo">

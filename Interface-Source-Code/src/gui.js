@@ -66,12 +66,12 @@ async function init() {
     p1NameInp = document.getElementById('p1Name');
     p1TagInp = document.getElementById('p1Tag');
     p1PronInp = document.getElementById('p1Pron');
-    p1CountryInp = document.getElementById('p1Country');
+    p1CountryInp = document.getElementById('p1CountryInput');
     p1NScoreInp = document.getElementById('p1NScore');
     p2NameInp = document.getElementById('p2Name');
     p2TagInp = document.getElementById('p2Tag');
     p2PronInp = document.getElementById('p2Pron');
-    p2CountryInp = document.getElementById('p2Country');
+    p2CountryInp = document.getElementById('p2CountryInput');
     p2NScoreInp = document.getElementById('p2NScore');
     charImgP1 = document.getElementById('p1CharImg');
     charImgP2 = document.getElementById('p2CharImg');
@@ -233,6 +233,10 @@ async function init() {
     //     p2NScoreInp.classList.add("hiddenScoreInput");
     //     p2ScoreTicks.classList.remove("hiddenScoreInput");
     // })
+
+    // Fill country select
+    fillCountrySelector('p1Country');
+    fillCountrySelector('p2Country');
 }
 
 
@@ -850,6 +854,68 @@ function setScore(score, tick1, tick2, tick3) {
     }
 }
 
+function switchCountrySelector(htmlSelectorId, forceClose = false) {
+    const wrapper = document.getElementById(htmlSelectorId);
+    const grid = wrapper.querySelector('.country-flag-grid');
+    const boundary = wrapper.querySelector('.country-flag-boundary');
+    if (grid.style.display == "grid" || forceClose) {
+        grid.style.display = "none";
+        boundary.style.display = "none";
+        return;
+    }
+    //if the wrapper is not visible, show it
+    grid.style.display = "grid";
+    boundary.style.display = "block";
+}
+
+function fillCountrySelector(htmlSelectorId) {
+    const wrapper = document.getElementById(htmlSelectorId);
+    const grid = wrapper.querySelector('.country-flag-grid');
+    const countryList = getJson("InterfaceInfo").countryList;
+    //clear the wrapper
+    grid.innerHTML = '';
+    //for each country, create a new div
+    for (const country of countryList) {
+        const newEl = document.createElement('button');
+        newEl.className = "countryEntry";
+        newEl.innerHTML = getEmoji(country.code);
+        newEl.ariaLabel = country.name + " (" + country.code + ")";
+        newEl.onclick = () => onCountryFlagClick(htmlSelectorId, country);
+        grid.appendChild(newEl);
+    }
+}
+
+function onCountryFlagClick(htmlSelectorId, country) {
+    const wrapper = document.getElementById(htmlSelectorId);
+    const grid = wrapper.querySelector('.country-flag-grid');
+    const boundary = wrapper.querySelector('.country-flag-boundary');
+    //when clicked, set the value of the input to the country code
+    if (htmlSelectorId == "p1Country") {
+        p1CountryInp.value = country.code;
+    } else {
+        p2CountryInp.value = country.code;
+    }
+    // TODO fixme
+    //hide the selector
+    grid.style.display = "none";
+    boundary.style.display = "none";
+    console.log('on element click', country.code)
+}
+
+function getEmoji(countryCode) {
+    // Convert the country code to a Unicode emoji
+    const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt(0));
+    return String.fromCodePoint(...codePoints);
+}
+
+function changePreviewValue(htmlSelectorId) {
+    const wrapper = document.getElementById(htmlSelectorId);
+    const input = document.getElementById(htmlSelectorId+'Input');
+    const preview = wrapper.querySelector('.country-preview');
+    preview.textContent = getEmoji(input.value)
+    console.log('change preview value to ' + getEmoji(input.value))
+    // TODO fixme
+}
 
 function forceWLtoggles() {
     const wlButtons = document.getElementsByClassName("wlButtons");

@@ -700,3 +700,46 @@ input[type="text"] {
   transform: scale(1.2);
   transition: transform 200ms
 }
+
+/* country flags */
+.country-selector {
+  position: relative;
+  float: left;
+  width: 50px;
+  border-radius: 0px;
+}
+
+.country-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+}
+
+.country-flag-grid {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background-color: #232323;
+  width: 200px;
+  height: 150px;
+  overflow-y: auto;
+  display: none;  /* hidden by default */
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 4px;
+  padding: 5px;
+  z-index: 50;
+}
+
+.country-flag-boundary {
+  z-index:10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* hidden by default */
+}
