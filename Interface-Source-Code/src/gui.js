@@ -891,15 +891,16 @@ function onCountryFlagClick(htmlSelectorId, country) {
     const boundary = wrapper.querySelector('.country-flag-boundary');
     //when clicked, set the value of the input to the country code
     if (htmlSelectorId == "p1Country") {
+        console.log('p1', country.code);
         p1CountryInp.value = country.code;
     } else {
+        console.log('p2', country.code);
         p2CountryInp.value = country.code;
     }
-    // TODO fixme
+    changePreviewValue(htmlSelectorId);
     //hide the selector
     grid.style.display = "none";
     boundary.style.display = "none";
-    console.log('on element click', country.code)
 }
 
 function getEmoji(countryCode) {
@@ -913,8 +914,6 @@ function changePreviewValue(htmlSelectorId) {
     const input = document.getElementById(htmlSelectorId+'Input');
     const preview = wrapper.querySelector('.country-preview');
     preview.textContent = getEmoji(input.value)
-    console.log('change preview value to ' + getEmoji(input.value))
-    // TODO fixme
 }
 
 function forceWLtoggles() {
