@@ -489,6 +489,17 @@
             text-align: center;
             margin-top: 10px;
         }
+
+        .gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            width: 100vw;
+            height: 300px;
+            background: linear-gradient(to top, rgba(255, 9, 9, 0.5), rgba(255, 36, 36, 0));
+            opacity: 0.6;
+        }
     </style>
 </head>
 
@@ -497,109 +508,6 @@
     <div id="logo" class="logo">
         <img src="Resources/Overlay/Logo.png">
     </div>
-    <!--  
-    <div id="overlayP1" class="scoreboardP1">
-       
-
-        <div class="rect" id="p1Color"></div>
-        <img class="sagaIcon" id="sagaIconP1">
-        <div class="pCharaMask">
-            <img id="p1Character" class="pCharacter">
-        </div>
-
-        <img id="teamLogoP1" class="teamLogo">
-
-        <span id="p1Wrapper" class="wrappers">
-            <span id="p1Team" class="teams"></span>
-            <span id="p1Name" class="names"></span>
-            <span id="p1Pron" class="pronouns"></span>
-        </span>
-    </div>
-    
-    <div id="scoresP1" class="scores">
-        <div id="win1P1" class="scoreTick">
-            <svg width="35" height="23" id="win1P1Color" class="absol">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" id="win1P1Border" class="absol">
-        </div>
-        
-        <div id="win2P1" class="scoreTick">
-            <svg width="35" height="23" class="absol" id="win2P1Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol" id="win2P1Border">
-        </div>
-
-        <div id="win3P1" class="scoreTick">
-            <svg width="35" height="23" class="absol" id="win3P1Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol" id="win3P1Border">
-        </div>
-
-        <div id="wlP1" class="scoreTick">
-            <img src="Resources/Overlay/WL BG.png" class="absol">
-            <img class="absol" id="wlP1Text">
-        </div>
-    </div>
-
-
-    <div id="overlayP2" class="scoreboardP2">
-
-
-        <div class="rect" id="p2Color"></div>
-        <img class="sagaIcon" id="sagaIconP2">
-        <div class="pCharaMask">
-            <div class="absol">
-                <img id="p2Character" class="pCharacter"/>
-            </div>
-        </div>
-
-        <img id="teamLogoP2" class="teamLogo">
-
-        <span id="p2Wrapper" class="wrappers">
-            <span id="p2Team" class="teams"></span>
-            <span id="p2Name" class="names"></span>
-            <span id="p2Pron" class="pronouns"></span>
-        </span>
-    </div>
-
-    <div id="p1NScore">
-        <span id="p1NScore"></span>
-    </div>
-
-    <div id="p2NScore">
-        <span id="p2NScore"></span>
-    </div>
-    
-    <div id="scoresP2" class="scores">
-        <div id="win1P2" class="scoreTick">
-            <svg width="35" height="23" id="win1P2Color" class="absol">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" id="win1P2Border" class="absol">
-        </div>
-        
-        <div id="win2P2" class="scoreTick">
-            <svg width="35" height="23" class="absol" id="win2P2Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol" id="win2P2Border">
-        </div>
-
-        <div id="win3P2" class="scoreTick">
-            <svg width="35" height="23" class="absol" id="win3P2Color">
-                <polygon points="10,0 32,0 25,23 0,23"/>
-            </svg>
-            <img src="Resources/Overlay/Win Border.png" class="absol" id="win3P2Border">
-        </div>
-
-        <div id="wlP2" class="scoreTick">
-            <img src="Resources/Overlay/WL BG.png" class="absol">
-            <img class="absol mirror" id="wlP2Text">
-        </div>
-    </div> -->
 
     <div class="logo-info">
         <div class="logo-info__wrapper">
@@ -656,6 +564,9 @@
 
             </div>
         </div>
+    </div>
+
+    <div class="gradient">
     </div>
 
 
