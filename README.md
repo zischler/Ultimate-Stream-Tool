@@ -1,13 +1,13 @@
-![preview](https://media.discordapp.net/attachments/799303953912168469/945058909520035880/unknown.png)
-
 # Ultimate-Stream-Tool
 *Also available for [Melee](https://github.com/Readek/Melee-Stream-Tool), [Rivals of Aether](https://github.com/Readek/RoA-Stream-Tool) and [Rushdown Revolt](https://github.com/Readek/Rushdown-Revolt-Stream-Tool)!*
 
 So you're interested in doing Smash Ultimate streams, huh? Luckily for you, with this tool you'll be able to update all the variables you need for the provided overlays with the provided GUI, and easily customize the overlays to make them your own! 
 
-The tool is free, but if you want to keep supporting the project and other Smash and non related stuff, you can donate me something on [Paypal](https://www.paypal.me/robertof2712). Thanks in advance!
+The tool is free, but if you want to keep supporting the project and other Smash and non related stuff, you can donate pokeroby_beto something on [Paypal](https://www.paypal.me/robertof2712).
 
 If you are also interested in adapting your layout with the stream tool or having a brand new one, lucky for you, I'm open for commisions! Contact me on Twitter [@pokeroby_beto](https://twitter.com/pokeroby_beto).
+
+- This is a fork of the original version created by pokeroby_beto. It is currently modified for the tournament series Swiss Dome and includes some features like country flags that are choosable.
 
 ---
 
@@ -30,8 +30,8 @@ These are instructions for regular OBS Studio, but I imagine you can do the same
 - Dowmload the ZIP file.
 - Extract somewhere.
 - Drag and drop `Game Scoreboard.html` into OBS, or add a new browser source in OBS pointing at the local file.
-- If the source looks weird, manually set the source's propierties to 1920 width and 1080 height, or set your OBS canvas resolution to 1080p, or make the source fit the screen.
-- In the source's propierties, change *Use custom frame rate* -> `60` (if streaming at 60fps of course).
+- If the source looks weird, manually set the source's properties to 1920 width and 1080 height, or set your OBS canvas resolution to 1080p, or make the source fit the screen.
+- In the source's properties, change *Use custom frame rate* -> `60` (if streaming at 60fps of course).
 - **Also tick** `Refresh browser when scene becomes active`.
 - Manage it all with the `Ultimate ST` executable.
 
