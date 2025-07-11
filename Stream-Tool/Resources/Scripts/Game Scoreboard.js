@@ -40,7 +40,9 @@ function init() {
 	}
 
 	mainLoop();
-	setInterval( () => { mainLoop(); }, 500); //update interval
+	setInterval(() => {
+		mainLoop();
+	}, 500); //update interval
 }
 
 async function getData(scInfo) {
@@ -53,7 +55,7 @@ async function getData(scInfo) {
 	let p1Skin = scInfo['p1Skin'];
 	let p1WL = scInfo['p1WL'];
 	let p1Country = scInfo['p1Country'];
-	
+
 	let p2Name = scInfo['p2Name'];
 	let p2Team = scInfo['p2Team'];
 	let p2Pron = scInfo['p2Pron'];
@@ -64,8 +66,8 @@ async function getData(scInfo) {
 	let p2WL = scInfo['p2WL'];
 	let p2Country = scInfo['p2Country'];
 
-	let p1NScore = scInfo ['p1NScore'];
-	let p2NScore = scInfo ['p2NScore'];
+	let p1NScore = scInfo['p1NScore'];
+	let p2NScore = scInfo['p2NScore'];
 
 	let round = scInfo['round'];
 	let bestOf = scInfo['bestOf'];
@@ -92,7 +94,7 @@ async function getData(scInfo) {
 			document.getElementById('overlayIntro').style.opacity = 1;
 
 			//this vid is just the bars moving (todo: maybe do it through javascript?)
-			setTimeout(() => { 
+			setTimeout(() => {
 				document.getElementById('introVid').setAttribute('src', 'Resources/Webms/Intro.webm');
 				document.getElementById('introVid').play();
 			}, 0); //if you need it to start later, change that 0 (and also update the introDelay)
@@ -114,14 +116,27 @@ async function getData(scInfo) {
 				p2IntroEL.style.textShadow = '0px 0px 20px ' + getHexColor(p2Color);
 
 				//player 1 name fade in
-				gsap.fromTo("#p1Intro",
-					{x: -pMove}, //from
-					{delay: introDelay, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime}); //to
+				gsap.fromTo("#p1Intro", {
+						x: -pMove
+					}, //from
+					{
+						delay: introDelay,
+						x: 0,
+						opacity: 1,
+						ease: "power2.out",
+						duration: fadeInTime
+					}); //to
 
 				//same for player 2
-				gsap.fromTo("#p2Intro",
-					{x: pMove},
-					{delay: introDelay, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+				gsap.fromTo("#p2Intro", {
+					x: pMove
+				}, {
+					delay: introDelay,
+					x: 0,
+					opacity: 1,
+					ease: "power2.out",
+					duration: fadeInTime
+				});
 
 			} else { //if its not the first game, show game count
 				const midTextEL = document.getElementById('midTextIntro');
@@ -138,7 +153,12 @@ async function getData(scInfo) {
 						midTextEL.textContent = "Final Game";
 						//if GF, we dont know if its the last game or not, right?
 						if (round.toLocaleUpperCase() == "Grand Finals".toLocaleUpperCase() && !(p1WL == "L" && p2WL == "L")) {
-							gsap.to("#superCoolInterrogation", {delay: introDelay+.5, opacity: 1, ease: "power2.out", duration: 1.5});
+							gsap.to("#superCoolInterrogation", {
+								delay: introDelay + .5,
+								opacity: 1,
+								ease: "power2.out",
+								duration: 1.5
+							});
 						}
 
 					}
@@ -147,12 +167,22 @@ async function getData(scInfo) {
 
 			document.getElementById('roundIntro').textContent = round;
 			document.getElementById('tNameIntro').textContent = tournamentName;
-			
+
 			//round, tournament and VS/GameX text fade in
-			gsap.to(".textIntro", {delay: introDelay-.2, opacity: 1, ease: "power2.out", duration: fadeInTime});
+			gsap.to(".textIntro", {
+				delay: introDelay - .2,
+				opacity: 1,
+				ease: "power2.out",
+				duration: fadeInTime
+			});
 
 			//aaaaand fade out everything
-			gsap.to("#overlayIntro", {delay: introDelay+1.6, opacity: 0, ease: "power2.out", duration: fadeInTime+.2});
+			gsap.to("#overlayIntro", {
+				delay: introDelay + 1.6,
+				opacity: 0,
+				ease: "power2.out",
+				duration: fadeInTime + .2
+			});
 
 			//lets delay everything that comes after this so it shows after the intro
 			introDelay = 2.6;
@@ -162,9 +192,16 @@ async function getData(scInfo) {
 		//update player name and team name texts
 		updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', 'p1Pron', p1Name, p1Team, p1Pron);
 		//sets the starting position for the player text, then fades in and moves the p1 text to the next keyframe
-		gsap.fromTo("#p1Wrapper", 
-			{x: -pMove}, //from
-			{delay: introDelay+.1, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime}); //to
+		gsap.fromTo("#p1Wrapper", {
+				x: -pMove
+			}, //from
+			{
+				delay: introDelay + .1,
+				x: 0,
+				opacity: 1,
+				ease: "power2.out",
+				duration: fadeInTime
+			}); //to
 
 		//set the character image and saga icon for the player
 		await updateChar(p1Character, p1Skin, 'p1Character', 'sagaIconP1');
@@ -193,9 +230,15 @@ async function getData(scInfo) {
 
 		//took notes from player 1? well, this is exactly the same!
 		updatePlayerName('p2Wrapper', 'p2Name', 'p2Team', 'p2Pron', p2Name, p2Team, p2Pron);
-		gsap.fromTo("#p2Wrapper", 
-			{x: pMove},
-			{delay: introDelay+.1, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+		gsap.fromTo("#p2Wrapper", {
+			x: pMove
+		}, {
+			delay: introDelay + .1,
+			x: 0,
+			opacity: 1,
+			ease: "power2.out",
+			duration: fadeInTime
+		});
 
 		await updateChar(p2Character, p2Skin, 'p2Character', 'sagaIconP2');
 		initCharaFade("#p2Character", "#sagaIconP2");
@@ -219,9 +262,15 @@ async function getData(scInfo) {
 
 		//update the round text
 		updateRound(round);
-		gsap.fromTo("#overlayRound", 
-			{x: 0}, //from
-			{delay: introDelay, opacity: 1, ease: "power2.out", duration: fadeInTime}); //to
+		gsap.fromTo("#overlayRound", {
+				x: 0
+			}, //from
+			{
+				delay: introDelay,
+				opacity: 1,
+				ease: "power2.out",
+				duration: fadeInTime
+			}); //to
 
 		updateFormat(format);
 		//update the best of text
@@ -232,21 +281,39 @@ async function getData(scInfo) {
 		}
 		//fade them in (but only if round text is not empty)
 		if (format != "") {
-			gsap.to("#overlayFormat", 
-			{delay: introDelay, opacity: 1, ease: "power2.out", duration: fadeInTime+.2});
+			gsap.to("#overlayFormat", {
+				delay: introDelay,
+				opacity: 1,
+				ease: "power2.out",
+				duration: fadeInTime + .2
+			});
 		}
-		
+
 
 		updatep1NScore(p1NScore);
 		updatep2NScore(p2NScore);
 
-		gsap.fromTo("#p1NScore", 
-			{x: -pMove}, //from
-			{delay: introDelay+.2, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime}); //to
+		gsap.fromTo("#p1NScore", {
+				x: -pMove
+			}, //from
+			{
+				delay: introDelay + .2,
+				x: 0,
+				opacity: 1,
+				ease: "power2.out",
+				duration: fadeInTime
+			}); //to
 
-		gsap.fromTo("#p2NScore", 
-			{x: pMove}, //from
-			{delay: introDelay+.2, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime}); //to
+		gsap.fromTo("#p2NScore", {
+				x: pMove
+			}, //from
+			{
+				delay: introDelay + .2,
+				x: 0,
+				opacity: 1,
+				ease: "power2.out",
+				duration: fadeInTime
+			}); //to
 
 		//set the caster info
 		/*
@@ -291,10 +358,6 @@ async function getData(scInfo) {
 		updateTeamLogo("teamLogoP1", p1Team);
 		updateTeamLogo("teamLogoP2", p2Team);
 
-		// update country flag
-		updateFlag("flagP1", p1Country);
-		updateFlag("flagP2", p2Country);
-
 		//animate them
 		fadeIn("#teamLogoP1");
 		fadeIn("#teamLogoP2");
@@ -305,19 +368,23 @@ async function getData(scInfo) {
 
 	//now things that will happen constantly
 	else {
-		
-	//player 1 time!
-	if (document.getElementById('p1Name').textContent != p1Name ||
-	document.getElementById('p1Team').textContent != p1Team ||
-	document.getElementById('p1Pron').textContent != p1Pron) {
-	//move and fade out the player 1's text
-	fadeOutMove("#p1Wrapper", -pMove, () => {
-		//now that nobody is seeing it, quick, change the text's content!
-		updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', 'p1Pron', p1Name, p1Team, p1Pron);
-		//fade the name back in with a sick movement
-		fadeInMove("#p1Wrapper");
-	});
-}
+
+		//player 1 time!
+		if (document.getElementById('p1Name').textContent != p1Name ||
+			document.getElementById('p1Team').textContent != p1Team ||
+			document.getElementById('p1Pron').textContent != p1Pron) {
+			//move and fade out the player 1's text
+			fadeOutMove("#p1Wrapper", -pMove, () => {
+				//now that nobody is seeing it, quick, change the text's content!
+				updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', 'p1Pron', p1Name, p1Team, p1Pron);
+				//fade the name back in with a sick movement
+				fadeInMove("#p1Wrapper");
+			});
+		}
+
+		// update country flag
+		updateFlag("flagP1", p1Country);
+		updateFlag("flagP2", p2Country);
 
 		//player 1's character portrait change
 		if (p1CharacterPrev != p1Character || p1SkinPrev != p1Skin) {
@@ -335,15 +402,31 @@ async function getData(scInfo) {
 		//the [W] and [L] status for grand finals
 		if (p1wlPrev != p1WL) {
 			//move it away!
-			gsap.to("#wlP1", {x: -pMove, opacity: 0, ease: "power1.in", duration: fadeOutTime, onComplete: pwlMoved});
+			gsap.to("#wlP1", {
+				x: -pMove,
+				opacity: 0,
+				ease: "power1.in",
+				duration: fadeOutTime,
+				onComplete: pwlMoved
+			});
+
 			function pwlMoved() {
 				//change the thing!
 				updateWL(p1WL, 1);
 				//move it back!
 				if (p1WL != "Nada") {
-					gsap.to("#wlP1", {delay: .3, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+					gsap.to("#wlP1", {
+						delay: .3,
+						x: 0,
+						opacity: 1,
+						ease: "power2.out",
+						duration: fadeInTime
+					});
 				} else {
-					gsap.to("#wlP1", {x: 0, duration: fadeInTime});
+					gsap.to("#wlP1", {
+						x: 0,
+						duration: fadeInTime
+					});
 				}
 			}
 			p1wlPrev = p1WL;
@@ -372,8 +455,8 @@ async function getData(scInfo) {
 		}
 
 
-			//did you pay attention earlier? Well, this is the same as player 1!
-			if (document.getElementById('p2Name').textContent != p2Name ||
+		//did you pay attention earlier? Well, this is the same as player 1!
+		if (document.getElementById('p2Name').textContent != p2Name ||
 			document.getElementById('p2Team').textContent != p2Team ||
 			document.getElementById('p2Pron').textContent != p2Pron) {
 			fadeOutMove("#p2Wrapper", pMove, () => {
@@ -392,13 +475,29 @@ async function getData(scInfo) {
 		}
 
 		if (p2wlPrev != p2WL) {
-			gsap.to("#wlP2", {x: pMove, opacity: 0, ease: "power1.in", duration: fadeOutTime, onComplete: pwlMoved});
+			gsap.to("#wlP2", {
+				x: pMove,
+				opacity: 0,
+				ease: "power1.in",
+				duration: fadeOutTime,
+				onComplete: pwlMoved
+			});
+
 			function pwlMoved() {
 				updateWL(p2WL, 2);
 				if (p2WL != "Nada") {
-					gsap.to("#wlP2", {delay: .3, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+					gsap.to("#wlP2", {
+						delay: .3,
+						x: 0,
+						opacity: 1,
+						ease: "power2.out",
+						duration: fadeInTime
+					});
 				} else {
-					gsap.to("#wlP2", {x: 0, duration: fadeInTime});
+					gsap.to("#wlP2", {
+						x: 0,
+						duration: fadeInTime
+					});
 				}
 			}
 			p2wlPrev = p2WL;
@@ -426,22 +525,40 @@ async function getData(scInfo) {
 		//hide or show score ticks depending of the Best Of status
 		if (bestOfPrev != bestOf) {
 			if (bestOf == "Bo5") {
-				gsap.fromTo('#win3P1',
-					{x: -pMove},
-					{x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
-				gsap.fromTo('#win3P2',
-					{x: pMove},
-					{x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
-				
+				gsap.fromTo('#win3P1', {
+					x: -pMove
+				}, {
+					x: 0,
+					opacity: 1,
+					ease: "power2.out",
+					duration: fadeInTime
+				});
+				gsap.fromTo('#win3P2', {
+					x: pMove
+				}, {
+					x: 0,
+					opacity: 1,
+					ease: "power2.out",
+					duration: fadeInTime
+				});
+
 				fadeOut("#bestOf", () => {
 					document.getElementById('bestOf').textContent = "First to ";
 					fadeIn("#bestOf");
 				});
 			} else {
-				gsap.to('#win3P1',
-					{x: -pMove, opacity: 0, ease: "power2.in", duration: fadeInTime});
-				gsap.to('#win3P2',
-					{x: pMove, opacity: 0, ease: "power2.in", duration: fadeInTime});
+				gsap.to('#win3P1', {
+					x: -pMove,
+					opacity: 0,
+					ease: "power2.in",
+					duration: fadeInTime
+				});
+				gsap.to('#win3P2', {
+					x: pMove,
+					opacity: 0,
+					ease: "power2.in",
+					duration: fadeInTime
+				});
 
 				fadeOut("#bestOf", () => {
 					document.getElementById('bestOf').textContent = "Best of ";
@@ -451,13 +568,13 @@ async function getData(scInfo) {
 			bestOfPrev = bestOf;
 		}
 
-		
+
 		//update the round text
-		if (document.getElementById('round').textContent != round){
+		if (document.getElementById('round').textContent != round) {
 			fadeOut("#overlayRound", () => {
 				updateRound(round);
 				console.log('test round 1')
-				if (round != "") {				
+				if (round != "") {
 					console.log('test round 2')
 
 					fadeIn("#overlayRound");
@@ -465,7 +582,7 @@ async function getData(scInfo) {
 			});
 		}
 
-		if (document.getElementById('format').textContent != format){
+		if (document.getElementById('format').textContent != format) {
 			fadeOut("#overlayFormat", () => {
 				updateFormat(format);
 				console.log('test format 1')
@@ -476,7 +593,7 @@ async function getData(scInfo) {
 			});
 		}
 
-		if (document.getElementById('p1NScore').textContent != p1NScore){
+		if (document.getElementById('p1NScore').textContent != p1NScore) {
 			fadeOut("#p1NScore", () => {
 				updatep1NScore(p1NScore);
 				if (p1NScore != "") {
@@ -484,7 +601,7 @@ async function getData(scInfo) {
 				}
 			});
 		}
-		if (document.getElementById('p2NScore').textContent != p2NScore){
+		if (document.getElementById('p2NScore').textContent != p2NScore) {
 			fadeOut("#p2NScore", () => {
 				updatep2NScore(p2NScore);
 				if (p2NScore != "") {
@@ -493,42 +610,42 @@ async function getData(scInfo) {
 			});
 		}
 
-/*
-		//update caster 1 info
-		if (document.getElementById('caster1N').textContent != caster1){
-			fadeOut("#caster1TextBox", () => {
-				updateSocialText("caster1N", caster1, casterSize, 'caster1TextBox');
-				//if no caster name, dont fade in the caster icon
-				if (caster1 != "") {
-					fadeIn("#caster1TextBox", .2);
+		/*
+				//update caster 1 info
+				if (document.getElementById('caster1N').textContent != caster1){
+					fadeOut("#caster1TextBox", () => {
+						updateSocialText("caster1N", caster1, casterSize, 'caster1TextBox');
+						//if no caster name, dont fade in the caster icon
+						if (caster1 != "") {
+							fadeIn("#caster1TextBox", .2);
+						}
+					});
 				}
-			});
-		}
-		//caster 1's twitter
-		if (document.getElementById('caster1Tr').textContent != twitter1){
-			updateSocial(twitter1, "caster1Tr", "caster1TwitterBox", twitch1, "caster1TwitchBox");
-		}
-		//caster 2's twitch (same as above)
-		if (document.getElementById('caster1Th').textContent != twitch1){
-			updateSocial(twitch1, "caster1Th", "caster1TwitchBox", twitter1, "caster1TwitterBox");
-		}
-
-		//caster 2, same as above
-		if (document.getElementById('caster2N').textContent != caster2){
-			fadeOut("#caster2TextBox", () => {
-				updateSocialText("caster2N", caster2, casterSize, 'caster2TextBox');
-				if (caster2 != "") {
-					fadeIn("#caster2TextBox", .2);
+				//caster 1's twitter
+				if (document.getElementById('caster1Tr').textContent != twitter1){
+					updateSocial(twitter1, "caster1Tr", "caster1TwitterBox", twitch1, "caster1TwitchBox");
 				}
-			});
-		}
-		if (document.getElementById('caster2Tr').textContent != twitter2){
-			updateSocial(twitter2, "caster2Tr", "caster2TwitterBox", twitch2, "caster2TwitchBox");
-		}
+				//caster 2's twitch (same as above)
+				if (document.getElementById('caster1Th').textContent != twitch1){
+					updateSocial(twitch1, "caster1Th", "caster1TwitchBox", twitter1, "caster1TwitterBox");
+				}
 
-		if (document.getElementById('caster2Th').textContent != twitch2){
-			updateSocial(twitch2, "caster2Th", "caster2TwitchBox", twitter2, "caster2TwitterBox");
-		}*/
+				//caster 2, same as above
+				if (document.getElementById('caster2N').textContent != caster2){
+					fadeOut("#caster2TextBox", () => {
+						updateSocialText("caster2N", caster2, casterSize, 'caster2TextBox');
+						if (caster2 != "") {
+							fadeIn("#caster2TextBox", .2);
+						}
+					});
+				}
+				if (document.getElementById('caster2Tr').textContent != twitter2){
+					updateSocial(twitter2, "caster2Tr", "caster2TwitterBox", twitch2, "caster2TwitchBox");
+				}
+
+				if (document.getElementById('caster2Th').textContent != twitch2){
+					updateSocial(twitch2, "caster2Th", "caster2TwitchBox", twitter2, "caster2TwitterBox");
+				}*/
 	}
 }
 
@@ -541,9 +658,9 @@ function showNothing(itemEL) {
 
 //score change, pretty simple
 function updateScore(pNum, pScore, pColor) {
-	const score1EL = document.getElementById('win1P'+pNum);
-	const score2EL = document.getElementById('win2P'+pNum);
-	const score3EL = document.getElementById('win3P'+pNum);
+	const score1EL = document.getElementById('win1P' + pNum);
+	const score2EL = document.getElementById('win2P' + pNum);
+	const score3EL = document.getElementById('win3P' + pNum);
 
 
 	if (pScore >= 1) {
@@ -562,9 +679,17 @@ function updateScore(pNum, pScore, pColor) {
 		scoreChange(score3EL, "#727272");
 	}
 }
+
 function scoreChange(scoreEL, color) {
-	gsap.to(scoreEL, {fill: "#ffffff", duration: fadeInTime})
-	gsap.to(scoreEL, {delay: fadeInTime, fill: color, duration: fadeInTime})
+	gsap.to(scoreEL, {
+		fill: "#ffffff",
+		duration: fadeInTime
+	})
+	gsap.to(scoreEL, {
+		delay: fadeInTime,
+		fill: color,
+		duration: fadeInTime
+	})
 }
 
 //updates the player's text and portrait background colors
@@ -572,8 +697,14 @@ function updateColor(colorID, textID, pColor) {
 	const colorEL = document.getElementById(colorID);
 	const textEL = document.getElementById(textID);
 
-	gsap.to(colorEL, {backgroundColor: getHexColor(pColor), duration: fadeInTime});
-	gsap.to(textEL, {color: getHexColor(pColor), duration: fadeInTime});
+	gsap.to(colorEL, {
+		backgroundColor: getHexColor(pColor),
+		duration: fadeInTime
+	});
+	gsap.to(textEL, {
+		color: getHexColor(pColor),
+		duration: fadeInTime
+	});
 }
 
 function updateBorder(bestOf) {
@@ -588,15 +719,23 @@ function updateTeamLogo(logoID, pTeam) {
 	const logoEL = document.getElementById(logoID);
 	logoEL.setAttribute('src', 'Resources/TeamLogos/' + pTeam + '.png');
 	//no image? show nothing
-	if (startup) {logoEL.addEventListener("error", () => {showNothing(logoEL)})}
+	if (startup) {
+		logoEL.addEventListener("error", () => {
+			showNothing(logoEL)
+		})
+	}
 }
 
 function updateFlag(el, country) {
-	if(el && country) {
+	if (el && country) {
 		const logoEL = document.getElementById(el);
 		logoEL.setAttribute('src', 'http://purecatamphetamine.github.io/country-flag-icons/1x1/' + country.toUpperCase() + '.svg');
 		//no image? show nothing
-		if (startup) {logoEL.addEventListener("error", () => {showNothing(logoEL)})}
+		if (startup) {
+			logoEL.addEventListener("error", () => {
+				showNothing(logoEL)
+			})
+		}
 	}
 }
 
@@ -619,7 +758,7 @@ function socialChange1(twitterWrapperID, twitchWrapperID) {
 			twitterWrapperEL.style.opacity = 1;
 			twitchWrapperEL.style.opacity = 0;
 		}
-		
+
 
 	} else if (!!twitter1 && !!twitch1) {
 
@@ -677,19 +816,19 @@ function updateSocial(mainSocial, mainText, mainBox, otherSocial, otherBox) {
 	}
 	//check if this is their turn so we fade out the other one
 	if (localSwitch) {
-		fadeOut("#"+otherBox, () => {})
+		fadeOut("#" + otherBox, () => {})
 	}
 
 	//now do the classics
-	fadeOut("#"+mainBox, () => {
+	fadeOut("#" + mainBox, () => {
 		updateSocialText(mainText, mainSocial, twitterSize, mainBox);
 		//check if its twitter's turn to show up
 		if (otherSocial == "" && mainSocial != "") {
-			fadeIn("#"+mainBox, .2);
+			fadeIn("#" + mainBox, .2);
 		} else if (localSwitch && mainSocial != "") {
-			fadeIn("#"+mainBox, .2);
+			fadeIn("#" + mainBox, .2);
 		} else if (otherSocial != "") {
-			fadeIn("#"+otherBox, .2);
+			fadeIn("#" + otherBox, .2);
 		}
 	});
 }
@@ -756,70 +895,148 @@ function updatep2NScore(p2NScore) {
 
 //fade out
 function fadeOut(itemID, funct) {
-	gsap.to(itemID, {opacity: 0, duration: fadeOutTime, onComplete: funct});
+	gsap.to(itemID, {
+		opacity: 0,
+		duration: fadeOutTime,
+		onComplete: funct
+	});
 }
 
 //fade out but with movement
 function fadeOutMove(itemID, move, funct) {
-	gsap.to(itemID, {x: -move, opacity: 0, ease: "power1.in", duration: fadeOutTime, onComplete: funct});
+	gsap.to(itemID, {
+		x: -move,
+		opacity: 0,
+		ease: "power1.in",
+		duration: fadeOutTime,
+		onComplete: funct
+	});
 }
 
 //fade out but for character/saga icon
-function fadeOutChara (itemID, sagaID, move, funct) {
-	gsap.to(itemID, {x: -move, opacity: 0, ease: "power1.in", duration: fadeOutTime, onComplete: funct});
-	gsap.to(sagaID, {opacity: 0, ease: "power1.in", duration: fadeOutTime});
+function fadeOutChara(itemID, sagaID, move, funct) {
+	gsap.to(itemID, {
+		x: -move,
+		opacity: 0,
+		ease: "power1.in",
+		duration: fadeOutTime,
+		onComplete: funct
+	});
+	gsap.to(sagaID, {
+		opacity: 0,
+		ease: "power1.in",
+		duration: fadeOutTime
+	});
 }
 
 //fade in
 function fadeIn(itemID) {
-	gsap.to(itemID, {delay: .2, opacity: 1, duration: fadeInTime});
+	gsap.to(itemID, {
+		delay: .2,
+		opacity: 1,
+		duration: fadeInTime
+	});
 }
 
 //fade in but with movement
 function fadeInMove(itemID) {
-	gsap.to(itemID, {delay: .3, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+	gsap.to(itemID, {
+		delay: .3,
+		x: 0,
+		opacity: 1,
+		ease: "power2.out",
+		duration: fadeInTime
+	});
 }
 
 //fade in but for the character/saga icon
 function fadeInChara(itemID, sagaID, move = pMove) {
-	gsap.to(itemID, {delay: .2, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
-	gsap.fromTo(sagaID,
-		{x: -move},
-		{delay: .3, x: 0, opacity: .3, ease: "power1.in", duration: fadeOutTime});
+	gsap.to(itemID, {
+		delay: .2,
+		x: 0,
+		opacity: 1,
+		ease: "power2.out",
+		duration: fadeInTime
+	});
+	gsap.fromTo(sagaID, {
+		x: -move
+	}, {
+		delay: .3,
+		x: 0,
+		opacity: .3,
+		ease: "power1.in",
+		duration: fadeOutTime
+	});
 }
 
 //fade in for the characters when first loading
 function initCharaFade(charaID, sagaID, move = pMove) {
-	gsap.fromTo(charaID,
-		{x: pMove},
-		{delay: introDelay, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
-	gsap.fromTo(sagaID,
-		{x: move},
-		{delay: introDelay+.2, x: 0, opacity: .3, ease: "power2.out", duration: fadeInTime});
+	gsap.fromTo(charaID, {
+		x: pMove
+	}, {
+		delay: introDelay,
+		x: 0,
+		opacity: 1,
+		ease: "power2.out",
+		duration: fadeInTime
+	});
+	gsap.fromTo(sagaID, {
+		x: move
+	}, {
+		delay: introDelay + .2,
+		x: 0,
+		opacity: .3,
+		ease: "power2.out",
+		duration: fadeInTime
+	});
 }
 
 //played when loading the html
 function moveScoresIntro(pNum, bestOf, pWL, move) {
-	const score1EL = document.getElementById('win1P'+pNum);
-	const score2EL = document.getElementById('win2P'+pNum);
-	const score3EL = document.getElementById('win3P'+pNum);
-	const wlEL = document.getElementById('wlP'+pNum);
+	const score1EL = document.getElementById('win1P' + pNum);
+	const score2EL = document.getElementById('win2P' + pNum);
+	const score3EL = document.getElementById('win3P' + pNum);
+	const wlEL = document.getElementById('wlP' + pNum);
 
-	gsap.fromTo(score1EL, 
-		{x:-move},
-		{delay: introDelay+.2, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
-	gsap.fromTo(score2EL, 
-		{x:-move},
-		{delay: introDelay+.4, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+	gsap.fromTo(score1EL, {
+		x: -move
+	}, {
+		delay: introDelay + .2,
+		x: 0,
+		opacity: 1,
+		ease: "power2.out",
+		duration: fadeInTime
+	});
+	gsap.fromTo(score2EL, {
+		x: -move
+	}, {
+		delay: introDelay + .4,
+		x: 0,
+		opacity: 1,
+		ease: "power2.out",
+		duration: fadeInTime
+	});
 	if (bestOf == "Bo5") {
-		gsap.fromTo(score3EL, 
-			{x:-move},
-			{delay: introDelay+.6, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+		gsap.fromTo(score3EL, {
+			x: -move
+		}, {
+			delay: introDelay + .6,
+			x: 0,
+			opacity: 1,
+			ease: "power2.out",
+			duration: fadeInTime
+		});
 	}
 	if (pWL == "W" || pWL == "L") {
-		gsap.fromTo(wlEL, 
-			{x:-move},
-			{delay: introDelay+.8, x: 0, opacity: 1, ease: "power2.out", duration: fadeInTime});
+		gsap.fromTo(wlEL, {
+			x: -move
+		}, {
+			delay: introDelay + .8,
+			x: 0,
+			opacity: 1,
+			ease: "power2.out",
+			duration: fadeInTime
+		});
 	}
 
 }
@@ -833,9 +1050,11 @@ function updateWL(pWL, playerNum) {
 	} else if (pWL == "L") {
 		pWLEL.setAttribute('src', 'Resources/Overlay/[L].png')
 	}
-	if (startup) {pWLEL.addEventListener("error", () => {
-		showNothing(pWLEL)
-	})}
+	if (startup) {
+		pWLEL.addEventListener("error", () => {
+			showNothing(pWLEL)
+		})
+	}
 }
 
 //text resize, keeps making the text smaller until it fits
@@ -865,11 +1084,11 @@ function getHexColor(color) {
 		case "Blue":
 			return "#2985f5";
 		case "Yellow":
-			return "#febc0d";	
+			return "#febc0d";
 		case "Green":
 			return "#21b546";
 		case "Orange":
-			return "#f88632";	
+			return "#f88632";
 		case "Cyan":
 			return "#26cae2";
 		case "Pink":
@@ -879,7 +1098,7 @@ function getHexColor(color) {
 		case "CPU":
 			return "#ACACAC";
 		case "Amiibo":
-			return "#87FFCD";				
+			return "#87FFCD";
 	}
 }
 
@@ -892,7 +1111,7 @@ function getInfo() {
 		oReq.send();
 
 		//will trigger when file loads
-		function reqListener () {
+		function reqListener() {
 			resolve(JSON.parse(oReq.responseText))
 		}
 	})
@@ -904,13 +1123,18 @@ function getCharInfo(pCharacter) {
 	return new Promise(function (resolve) {
 		const oReq = new XMLHttpRequest();
 		oReq.addEventListener("load", reqListener);
-		oReq.onerror = () => {resolve("notFound")}; //for obs local file browser sources
+		oReq.onerror = () => {
+			resolve("notFound")
+		}; //for obs local file browser sources
 		oReq.open("GET", 'Resources/Texts/Character Info/' + pCharacter + '.json');
 		oReq.send();
 
-		function reqListener () {
-			try {resolve(JSON.parse(oReq.responseText))}
-			catch {resolve("notFound")} //for live servers
+		function reqListener() {
+			try {
+				resolve(JSON.parse(oReq.responseText))
+			} catch {
+				resolve("notFound")
+			} //for live servers
 		}
 	})
 }
@@ -921,13 +1145,15 @@ async function updateChar(pCharacter, pSkin, charID, sagaID) {
 	//change the image path depending on the character and skin
 	charEL.setAttribute('src', 'Resources/Characters/Stock Icons/' + pCharacter + '/' + pSkin + '.png');
 	//add a listener to show the random portrait if the image fails to load
-	if (startup) {charEL.addEventListener("error", () => {
-		if (charEL == document.getElementById("p1Character")) {
-			charEL.setAttribute('src', 'Resources/Characters/Stock Icons/Random.png');
-		} else {
-			charEL.setAttribute('src', 'Resources/Characters/Stock Icons/Random.png');
-		}
-	})}
+	if (startup) {
+		charEL.addEventListener("error", () => {
+			if (charEL == document.getElementById("p1Character")) {
+				charEL.setAttribute('src', 'Resources/Characters/Stock Icons/Random.png');
+			} else {
+				charEL.setAttribute('src', 'Resources/Characters/Stock Icons/Random.png');
+			}
+		})
+	}
 
-	
+
 }
