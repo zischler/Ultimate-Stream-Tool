@@ -20,7 +20,7 @@ const getExePath = () => {
       return path.resolve(exePath, '../../../../');
     } else {
       // On Windows and Linux, just use the directory of the executable
-      return path.resolve(exePath, '../Stream-Tool');
+      return path.resolve(exePath, '../../Stream-Tool');
     }
   } else {
     return path.resolve(process.cwd(), '../Stream-Tool'); // For development, return the parent directory of the current working directory
@@ -49,8 +49,6 @@ const createWindow = () => {
       nodeIntegration: true,
     }
   });
-
-  mainWindow.webContents.openDevTools();
 
 
   // we dont like menus
