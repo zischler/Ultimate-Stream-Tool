@@ -1,4 +1,9 @@
-const { app, globalShortcut, BrowserWindow, ipcMain } = require('electron');
+const {
+  app,
+  globalShortcut,
+  BrowserWindow,
+  ipcMain
+} = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -7,19 +12,19 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const getExePath = () => {
-    const isPackaged = app.isPackaged;
-    if(isPackaged) {
-      const exePath = app.getPath('exe');
-      if (process.platform === 'darwin') {
-        // Go up three directories: .../Ultimate ST.app/Contents/MacOS -> .../Ultimate ST.app
-        return path.resolve(exePath, '../../../../');
-      } else {
-        // On Windows and Linux, just use the directory of the executable
-        return path.dirname(exePath);
-      }
+  const isPackaged = app.isPackaged;
+  if (isPackaged) {
+    const exePath = app.getPath('exe');
+    if (process.platform === 'darwin') {
+      // Go up three directories: .../Ultimate ST.app/Contents/MacOS -> .../Ultimate ST.app
+      return path.resolve(exePath, '../../../../');
     } else {
-      return path.resolve(process.cwd(), '../Stream-Tool'); // For development, return the parent directory of the current working directory
+      // On Windows and Linux, just use the directory of the executable
+      return path.dirname(exePath, '../Stream-Tool');
     }
+  } else {
+    return path.resolve(process.cwd(), '../Stream-Tool'); // For development, return the parent directory of the current working directory
+  }
 }
 
 const createWindow = () => {
@@ -31,7 +36,7 @@ const createWindow = () => {
     resizable: false,
 
     icon: path.join(__dirname, 'icon.png'),
-    
+
     minWidth: 890,
     minHeight: 349,
     maxWidth: 890,
@@ -45,7 +50,7 @@ const createWindow = () => {
     }
   });
 
-  mainWindow.webContents.openDevTools(); 
+  mainWindow.webContents.openDevTools();
 
 
   // we dont like menus
@@ -53,7 +58,7 @@ const createWindow = () => {
 
 
 
-// mainWindow.setAlwaysOnTop(true);
+  // mainWindow.setAlwaysOnTop(true);
 
   // load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
