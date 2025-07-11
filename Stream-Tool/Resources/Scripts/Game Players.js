@@ -78,94 +78,6 @@ async function getData(scInfo) {
 
 	//first, things that will happen only the first time the html loads
 	if (startup) {
-		//of course, we have to start with the cool intro stuff
-		const allowIntro = false // scInfo['allowIntro']; //to know if the intro is allowed. TODO can be readded if needed
-		if (allowIntro) {
-
-			//this variable is only used in the intro
-			const tournamentName = scInfo['tournamentName'];
-
-			//lets see that intro
-			document.getElementById('overlayIntro').style.opacity = 1;
-
-			//this vid is just the bars moving (todo: maybe do it through javascript?)
-			setTimeout(() => {
-				document.getElementById('introVid').setAttribute('src', 'Resources/Webms/Intro.webm');
-				document.getElementById('introVid').play();
-			}, 0); //if you need it to start later, change that 0 (and also update the introDelay)
-
-			if (parseInt(p1NScore) + parseInt(p2NScore) == 0) { //if this is the first game, introduce players
-
-				const p1IntroEL = document.getElementById('p1Intro');
-				const p2IntroEL = document.getElementById('p2Intro');
-
-				p1IntroEL.textContent = p1Name; //update player 1 intro text
-				p1IntroEL.style.fontSize = '60px'; //resize the font to its max size
-				resizeText(p1IntroEL); //resize the text if its too large
-				p2IntroEL.style.fontSize = '60px';
-				p2IntroEL.textContent = p2Name; //p2
-				resizeText(p2IntroEL);
-
-				//change the color of the player text shadows
-				p1IntroEL.style.textShadow = '0px 0px 20px ' + getHexColor(p1Color);
-				p2IntroEL.style.textShadow = '0px 0px 20px ' + getHexColor(p2Color);
-
-				//player 1 name fade in
-				gsap.fromTo("#p1Intro", {
-						x: -pMove
-					}, //from
-					{
-						delay: introDelay,
-						x: 0,
-						opacity: 1,
-						ease: "power2.out",
-						duration: fadeInTime
-					}); //to
-
-				//same for player 2
-				gsap.fromTo("#p2Intro", {
-					x: pMove
-				}, {
-					delay: introDelay,
-					x: 0,
-					opacity: 1,
-					ease: "power2.out",
-					duration: fadeInTime
-				});
-
-			} else { //if its not the first game, show game count
-				const midTextEL = document.getElementById('midTextIntro');
-				if ((parseInt(p1NScore) + parseInt(p2NScore)) != 4) { //if its not the last game of a bo5
-
-					//just show the game count in the intro
-					midTextEL.textContent = "Game " + (parseInt(p1NScore) + parseInt(p2NScore) + 1);
-
-				} else { //if game 5
-				}
-			}
-
-			document.getElementById('tNameIntro').textContent = tournamentName;
-
-			//round, tournament and VS/GameX text fade in
-			gsap.to(".textIntro", {
-				delay: introDelay - .2,
-				opacity: 1,
-				ease: "power2.out",
-				duration: fadeInTime
-			});
-
-			//aaaaand fade out everything
-			gsap.to("#overlayIntro", {
-				delay: introDelay + 1.6,
-				opacity: 0,
-				ease: "power2.out",
-				duration: fadeInTime + .2
-			});
-
-			//lets delay everything that comes after this so it shows after the intro
-			introDelay = 2.6;
-		}
-
 		//finally out of the intro, now lets start with player 1 first
 		//update player name and team name texts
 		updatePlayerName('p1Wrapper', 'p1Name', 'p1Team', 'p1Pron', p1Name, p1Team, p1Pron);
@@ -255,45 +167,6 @@ async function getData(scInfo) {
 				ease: "power2.out",
 				duration: fadeInTime
 			}); //to
-
-		//set the caster info
-		/*
-		updateSocialText("caster1N", caster1, casterSize, "caster1TextBox");
-		updateSocialText("caster1Tr", twitter1, twitterSize, "caster1TwitterBox");
-		updateSocialText("caster1Th", twitch1, twitterSize, "caster1TwitchBox");
-		updateSocialText("caster2N", caster2, casterSize, "caster2TextBox");
-		updateSocialText("caster2Tr", twitter2, twitterSize, "caster2TwitterBox");
-		updateSocialText("caster2Th", twitch2, twitterSize, "caster2TwitchBox");
-
-		//setup twitter/twitch change
-		socialChange1("caster1TwitterBox", "caster1TwitchBox");
-		socialChange2("caster2TwitterBox", "caster2TwitchBox");
-		//set an interval to keep changing the names
-		socialInt1 = setInterval( () => {
-			socialChange1("caster1TwitterBox", "caster1TwitchBox");
-		}, socialInterval);
-		socialInt2 = setInterval(() => {
-			socialChange2("caster2TwitterBox", "caster2TwitchBox");
-		}, socialInterval);
-
-		//keep changing this boolean for the previous intervals
-		setInterval(() => {
-			if (socialSwitch) { //true = twitter, false = twitch
-				socialSwitch = false;
-			} else {
-				socialSwitch = true;
-			}
-		}, socialInterval);
-
-		//if a caster has no name, hide its icon
-		if (caster1 == "") {
-			document.getElementById('caster1TextBox').style.opacity = 0;
-		}
-		if (caster2 == "") {
-			document.getElementById('caster2TextBox').style.opacity = 0;
-		}
-		*/
-
 
 		//check if the team has a logo we can place on the overlay
 		updateTeamLogo("teamLogoP1", p1Team);
@@ -671,21 +544,6 @@ function updatePlayerName(wrapperID, nameID, teamID, pronID, pName, pTeam, pPron
 	pronEL.style.fontSize = '20px';
 	pronEL.textContent = pPron;
 	resizeText(document.getElementById(wrapperID)); //resize if it overflows
-}
-
-//round change
-function updateRound(round) {
-	const roundEL = document.getElementById('round');
-	roundEL.style.fontSize = roundSize; //set original text size
-	roundEL.textContent = round; //change the actual text
-	resizeText(roundEL); //resize it if it overflows
-}
-
-function updateFormat(format) {
-	const formatEL = document.getElementById('format');
-	formatEL.style.fontSize = formatSize; //set original text size
-	formatEL.textContent = format; //change the actual text
-	resizeText(formatEL); //resize it if it overflows
 }
 
 //generic text changer
